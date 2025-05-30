@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+.login-container, .dashboard-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 90%;
+    box-sizing:border-box;
+    margin: 20px;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+input[type="text"], input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+button:hover {
+    background-color: #0056b3;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: normal;
+}
+th {
+    background-color: #f2f2f2;
+}
+
+/* Media Query untuk Layar Kecil (misalnya, ponsel di bawah 600px) */
+@media (max-width: 600px) {
+    .login-container, .dashboard-container {
+        padding: 20px; /* Kurangi padding */
+        width: 95%; /* Lebih lebar di ponsel */
+    }
+
+    h1 {
+        font-size: 24px; /* Kurangi ukuran font judul */
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    input[type="text"], input[type="password"], button {
+        font-size: 14px; /* Kurangi ukuran font input/button */
+        padding: 8px;
+    }
+
+    /* Contoh: Jika ada navigasi, bisa diubah menjadi stack vertikal */
+    /* .navbar ul {
+        flex-direction: column;
+    } */
+
+    /* Untuk tabel di ponsel, Anda bisa ubah display menjadi block atau menggunakan pattern Card */
+    /* Ini akan membuat setiap baris tabel menjadi seperti 'kartu' di ponsel */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead tr {
+        position: absolute;
+        top: -9999px; /* Sembunyikan header asli */
+        left: -9999px;
+    }
+    tr {
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        display: block; /* Agar setiap baris menjadi blok terpisah */
+    }
+    td {
+        border: none; /* Hapus border antar sel */
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%; /* Beri ruang untuk label */
+        text-align: right; /* Konten sel ke kanan */
+    }
+    td:before {
+        content: attr(data-label); /* Tampilkan label kolom */
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+    }
+}

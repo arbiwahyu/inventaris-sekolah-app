@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Inventaris Sekolah</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Selamat Datang di Dashboard Inventaris!</h2>
+        <p>Anda telah berhasil login sebagai <span id="loggedInUser"></span> (<span id="userRole"></span>).</p>
+        <p>Ini adalah tempat di mana Anda akan melihat dan mengelola aset sekolah.</p>
+
+        <button id="addAssetButton">Tambah Aset Baru</button>
+
+        <h3>Daftar Aset</h3>
+        <table id="assetsTable">
+            <thead>
+                <tr>
+                    <th>No. Inventaris</th>
+                    <th>Nama Aset</th>
+                    <th>Kategori</th>
+                    <th>Lokasi</th>
+                    <th>Kondisi</th>
+                    <th>Penanggung Jawab</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                </tbody>
+        </table>
+        <button id="logoutButton">Logout</button>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/authCheck.js"></script>
+</body>
+</html>
