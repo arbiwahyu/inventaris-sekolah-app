@@ -14,6 +14,18 @@
 
         <button id="addAssetButton">Tambah Aset Baru</button>
 
+         <div class="filter-section" style="margin-top: 20px; margin-bottom: 20px;">
+            <input type="text" id="searchInput" placeholder="Cari aset (Nomor, Nama, PJ, Deskripsi)" style="padding: 8px; width: 300px; margin-right: 10px;">
+            <select id="categoryFilter" style="padding: 8px; margin-right: 10px;">
+                <option value="">Semua Kategori</option>
+                </select>
+            <select id="locationFilter" style="padding: 8px; margin-right: 10px;">
+                <option value="">Semua Lokasi</option>
+                </select>
+            <button id="applyFilterButton" style="padding: 8px;">Terapkan Filter</button>
+            <button id="clearFilterButton" style="padding: 8px; margin-left: 5px;">Hapus Filter</button>
+        </div>
+
         <h3>Daftar Aset</h3>
         <table id="assetsTable">
             <thead>
@@ -33,7 +45,56 @@
         <button id="logoutButton">Logout</button>
     </div>
 
-    <script src="js/dashboard.js"></script>
-    <script src="js/authCheck.js"></script>
+    <div id="borrowModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Pinjam Aset: <span id="borrowAssetName"></span> (<span id="borrowAssetNomorInventaris"></span>)</h3>
+            <form id="borrowForm">
+                <input type="hidden" id="borrowAssetId">
+                <div class="form-group">
+                    <label for="borrowerName">Nama Peminjam:</label>
+                    <input type="text" id="borrowerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="returnDateExpected">Tanggal Kembali (Estimasi):</label>
+                    <input type="date" id="returnDateExpected">
+                </div>
+                <div class="form-group">
+                    <label for="borrowCondition">Kondisi Saat Pinjam:</label>
+                    <input type="text" id="borrowCondition" value="Baik" required>
+                </div>
+                <div class="form-group">
+                    <label for="borrowNotes">Catatan:</label>
+                    <textarea id="borrowNotes" rows="3"></textarea>
+                </div>
+                <button type="submit">Catat Peminjaman</button>
+                <p id="borrowMessage" style="color: red; margin-top: 10px;"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="returnModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Kembalikan Aset: <span id="returnAssetName"></span> (<span id="returnAssetNomorInventaris"></span>)</h3>
+            <form id="returnForm">
+                <input type="hidden" id="returnBorrowRecordId"> <div class="form-group">
+                    <label for="returnCondition">Kondisi Saat Kembali:</label>
+                    <input type="text" id="returnCondition" value="Baik" required>
+                </div>
+                <div class="form-group">
+                    <label for="returnNotes">Catatan Pengembalian:</label>
+                    <textarea id="returnNotes" rows="3"></textarea>
+                </div>
+                <button type="submit">Catat Pengembalian</button>
+                <p id="returnMessage" style="color: red; margin-top: 10px;"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- <script src="js/dashboard.js"></script>
+    <script src="js/authCheck.js"></script> -->
+    <script src="js/dashboard.js?v=202505300611"></script> 
+    <script src="js/authCheck.js?v=202505300611"></script>
 </body>
 </html>

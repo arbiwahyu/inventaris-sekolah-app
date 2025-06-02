@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Aset - Inventaris Sekolah</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Aset</h2>
+        <form id="assetForm">
+            <div class="form-group">
+                <label for="nomor_inventaris">Nomor Inventaris:</label>
+                <input type="text" id="nomor_inventaris" name="nomor_inventaris" required>
+            </div>
+            <div class="form-group">
+                <label for="nama_aset">Nama Aset:</label>
+                <input type="text" id="nama_aset" name="nama_aset" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Deskripsi:</label>
+                <textarea id="description" name="description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="category_id">Kategori:</label>
+                <select id="category_id" name="category_id" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="location_id">Lokasi:</label>
+                <select id="location_id" name="location_id" required>
+                    <option value="">-- Pilih Lokasi --</option>
+                    </select>
+            </div>
+            <div class="form-group">
+                <label for="condition">Kondisi:</label>
+                <input type="text" id="condition" name="condition" required>
+            </div>
+            <div class="form-group">
+                <label for="penanggung_jawab">Penanggung Jawab:</label>
+                <input type="text" id="penanggung_jawab" name="penanggung_jawab">
+            </div>
+            <div class="form-group">
+                <label for="tanggal_perolehan">Tanggal Perolehan:</label>
+                <input type="date" id="tanggal_perolehan" name="tanggal_perolehan">
+            </div>
+            <div class="form-group">
+                <label for="harga_perolehan">Harga Perolehan:</label>
+                <input type="number" id="harga_perolehan" name="harga_perolehan" step="0.01">
+            </div>
+            <div class="form-group">
+                <label for="foto_url">URL Foto:</label>
+                <input type="url" id="foto_url" name="foto_url">
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status" required>
+            </div>
+            <button type="submit">Simpan Perubahan</button>
+            <button type="button" onclick="window.location.href='/dashboard.html'">Batal</button>
+            <p id="message" style="color: red; margin-top: 10px;"></p>
+        </form>
+    </div>
+    <script src="js/editAsset.js"></script>
+    <script src="js/authCheck.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ const assetRoutes = require('./routes/assetRoutes');
 //const userRoutes = require('./routes/userRoutes');       // Uncomment jika sudah membuat file ini
 const locationRoutes = require('./routes/locationRoutes'); // Uncomment jika sudah membuat file ini
 const categoryRoutes = require('./routes/categoryRoutes'); // Uncomment jika sudah membuat file ini
+const borrowRoutes = require('./routes/borrowRoutes'); // Uncomment jika sudah membuat file ini
 // --- END: Tambahkan import routes baru di sini ---
 
 
@@ -65,7 +66,7 @@ app.use('/api/assets', assetRoutes);
 //app.use('/api/users', userRoutes);       // Uncomment jika sudah membuat file ini
 app.use('/api/locations', locationRoutes); // Uncomment jika sudah membuat file ini
 app.use('/api/categories', categoryRoutes); // Uncomment jika sudah membuat file ini
-
+app.use('/api/borrows', borrowRoutes); // Uncomment jika sudah membuat file ini
 // --- END: Tambahkan API Routes di sini ---
 
 // Error handling middleware (optional, tapi disarankan untuk catch error)

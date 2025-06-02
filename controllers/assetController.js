@@ -2,25 +2,53 @@ const pool = require('../config/db'); // Pastikan path ini benar ke file koneksi
 
 // GET semua aset
 exports.getAllAssets = async (req, res) => {
+    const { search, category_id, location_id, status } = req.query; // Ambil parameter dari query string
+    let sql = `
+        SELECT
+            a.*,
+            c.nama_kategori AS category_name,
+            l.nama_lokasi AS location_name
+        FROM
+            assets a
+        LEFT JOIN
+            categories c ON a.category_id = c.id
+        LEFT JOIN
+            locations l ON a.location_id = l.id
+        WHERE 1=1 -- Kondisi TRUE awal untuk memudahkan penambahan klausa AND
+    `;
+    const params = [];
+
+    // Tambahkan kondisi pencarian
+    if (search) {
+        sql += ` AND (a.nomor_inventaris LIKE ? OR a.nama_aset LIKE ? OR a.penanggung_jawab LIKE ? OR a.description LIKE ?)`;
+        params.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
+    }
+
+    // Tambahkan kondisi filter kategori
+    if (category_id) {
+        sql += ` AND a.category_id = ?`;
+        params.push(category_id);
+    }
+
+    // Tambahkan kondisi filter lokasi
+    if (location_id) {
+        sql += ` AND a.location_id = ?`;
+        params.push(location_id);
+    }
+
+    // Tambahkan kondisi filter status (jika ada)
+    if (status) {
+        sql += ` AND a.status = ?`;
+        params.push(status);
+    }
+
+    sql += ` ORDER BY a.nama_aset ASC`; // Urutkan hasil
+
     try {
-        // Gabungkan tabel assets dengan categories dan locations untuk mendapatkan nama
-        // Ini digunakan untuk menampilkan nama kategori dan lokasi di dashboard
-        const [rows] = await pool.execute(`
-            SELECT
-                a.*,
-                c.nama_kategori AS category_name,
-                l.nama_lokasi AS location_name
-            FROM
-                assets a
-            LEFT JOIN
-                categories c ON a.category_id = c.id
-            LEFT JOIN
-                locations l ON a.location_id = l.id
-            ORDER BY a.nama_aset ASC
-        `);
+        const [rows] = await pool.execute(sql, params);
         res.json(rows);
     } catch (error) {
-        console.error('Error fetching assets:', error);
+        console.error('Error fetching assets with search/filter:', error);
         res.status(500).json({ message: 'Error fetching assets', error: error.message });
     }
 };
@@ -93,7 +121,7 @@ exports.updateAsset = async (req, res) => {
 
     try {
         const [result] = await pool.execute(
-            'UPDATE assets SET nomor_inventaris = ?, nama_aset = ?, category_id = ?, description = ?, condition = ?, location_id = ?, penanggung_jawab = ?, tanggal_perolehan = ?, harga_perolehan = ?, foto_url = ?, status = ? WHERE id = ?',
+            'UPDATE assets SET nomor_inventaris = ?, nama_aset = ?, category_id = ?, description = ?, `condition` = ?, location_id = ?, penanggung_jawab = ?, tanggal_perolehan = ?, harga_perolehan = ?, foto_url = ?, status = ? WHERE id = ?',
             [nomor_inventaris, nama_aset, category_id, description, condition, location_id, penanggung_jawab, tanggal_perolehan, harga_perolehan, foto_url, status, id]
         );
         if (result.affectedRows === 0) {
