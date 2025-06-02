@@ -12,18 +12,21 @@
         <p>Anda telah berhasil login sebagai <span id="loggedInUser"></span> (<span id="userRole"></span>).</p>
         <p>Ini adalah tempat di mana Anda akan melihat dan mengelola aset sekolah.</p>
 
-        <button id="addAssetButton">Tambah Aset Baru</button>
+        <div class="dashboard-actions">
+            <button id="addAssetButton">Tambah Aset Baru</button>
+            <button id="userManagementButton">Manajemen Pengguna</button>
+        </div>
 
-         <div class="filter-section" style="margin-top: 20px; margin-bottom: 20px;">
-            <input type="text" id="searchInput" placeholder="Cari aset (Nomor, Nama, PJ, Deskripsi)" style="padding: 8px; width: 300px; margin-right: 10px;">
-            <select id="categoryFilter" style="padding: 8px; margin-right: 10px;">
+        <div class="filter-section">
+            <input type="text" id="searchInput" placeholder="Cari aset (Nomor, Nama, PJ, Deskripsi)">
+            <select id="categoryFilter">
                 <option value="">Semua Kategori</option>
                 </select>
-            <select id="locationFilter" style="padding: 8px; margin-right: 10px;">
+            <select id="locationFilter">
                 <option value="">Semua Lokasi</option>
                 </select>
-            <button id="applyFilterButton" style="padding: 8px;">Terapkan Filter</button>
-            <button id="clearFilterButton" style="padding: 8px; margin-left: 5px;">Hapus Filter</button>
+            <button id="applyFilterButton">Terapkan Filter</button>
+            <button id="clearFilterButton">Hapus Filter</button>
         </div>
 
         <h3>Daftar Aset</h3>
@@ -78,7 +81,8 @@
             <span class="close-button">&times;</span>
             <h3>Kembalikan Aset: <span id="returnAssetName"></span> (<span id="returnAssetNomorInventaris"></span>)</h3>
             <form id="returnForm">
-                <input type="hidden" id="returnBorrowRecordId"> <div class="form-group">
+                <input type="hidden" id="returnBorrowRecordId">
+                <div class="form-group">
                     <label for="returnCondition">Kondisi Saat Kembali:</label>
                     <input type="text" id="returnCondition" value="Baik" required>
                 </div>
@@ -92,9 +96,7 @@
         </div>
     </div>
 
-    <!-- <script src="js/dashboard.js"></script>
-    <script src="js/authCheck.js"></script> -->
-    <script src="js/dashboard.js?v=202505300611"></script> 
-    <script src="js/authCheck.js?v=202505300611"></script>
+    <script src="js/dashboard.js?v=202506021403"></script> 
+    <script src="js/authCheck.js?v=202506021403"></script> 
 </body>
 </html>

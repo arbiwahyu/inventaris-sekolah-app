@@ -51,9 +51,8 @@ async function fetchAssets(token, search = '', category_id = '', location_id = '
         if (category_id) url += `category_id=${encodeURIComponent(category_id)}&`;
         if (location_id) url += `location_id=${encodeURIComponent(location_id)}&`;
 
-        // Hapus '&' terakhir jika ada
         if (url.endsWith('&')) {
-            url = url.slice(0, -1);
+            url = url.slice(0, -1); // Hapus '&' terakhir jika ada
         }
 
         const response = await fetch(url, {
@@ -90,7 +89,7 @@ async function fetchAssets(token, search = '', category_id = '', location_id = '
             console.log('Processing asset:', asset);
             const row = assetsTableBody.insertRow();
 
-            let cell;
+            let cell; // Deklarasikan variabel cell di luar try-catch
             // Pastikan pemanggilan insertCell() dilakukan sekali dan hasilnya disimpan
             try {
                 cell = row.insertCell(0); // Tambahkan index 0 untuk kolom pertama
@@ -271,6 +270,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Elemen Modal (Diinisialisasi di sini karena sudah di dalam DOMContentLoaded)
+    // Variabel-variabel ini HARUS dideklarasikan di sini karena elemen-elemennya diakses di sini
     const borrowModal = document.getElementById('borrowModal');
     const returnModal = document.getElementById('returnModal');
     const closeButtons = document.querySelectorAll('.close-button');
@@ -304,7 +304,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const borrowNotes = document.getElementById('borrowNotes').value;
             const borrowMessage = document.getElementById('borrowMessage');
 
-            // ... (kode submit peminjaman) ...
             try {
                 const response = await fetch('/api/borrow/borrow', {
                     method: 'POST',
@@ -351,7 +350,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const returnNotes = document.getElementById('returnNotes').value;
             const returnMessage = document.getElementById('returnMessage');
 
-            // ... (kode submit pengembalian) ...
             try {
                 const response = await fetch(`/api/borrow/return/${borrowRecordId}`, {
                     method: 'PUT',
@@ -393,11 +391,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('loggedInUser').textContent = user.username;
         document.getElementById('userRole').textContent = user.role;
 
+        // Tampilkan/sembunyikan tombol Manajemen Pengguna berdasarkan peran
+        const userManagementButton = document.getElementById('userManagementButton');
+        if (userManagementButton) {
+            if (user.role === 'admin') { // Hanya admin yang bisa melihat
+                userManagementButton.style.display = 'inline-block';
+                userManagementButton.addEventListener('click', () => {
+                    window.location.href = '/user-management.html';
+                });
+            } else {
+                userManagementButton.style.display = 'none'; // Sembunyikan untuk peran lain
+            }
+        }
+
+        // Tampilkan/sembunyikan tombol Tambah Aset berdasarkan peran (misal admin dan staff)
+        const addAssetButton = document.getElementById('addAssetButton');
+        if (addAssetButton) {
+            if (user.role === 'admin' || user.role === 'staff') { // Misalnya admin dan staff bisa tambah aset
+                addAssetButton.style.display = 'inline-block';
+                addAssetButton.addEventListener('click', () => {
+                    window.location.href = '/add-asset.html'; // Ganti dengan URL halaman tambah aset
+                });
+            } else {
+                addAssetButton.style.display = 'none';
+            }
+        }
+
+
         // Muat opsi kategori dan lokasi ke dropdown filter
-        await loadFilterOptions(token);
+        await loadFilterOptions(token); // Panggil fungsi yang didefinisikan di atas
 
         // Muat daftar aset awal (tanpa filter)
-        await fetchAssets(token);
+        await fetchAssets(token); // Panggil fungsi yang didefinisikan di atas
 
     } catch (error) {
         console.error("Error decoding token or fetching user data:", error);
@@ -410,7 +435,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const search = document.getElementById('searchInput').value;
         const category_id = document.getElementById('categoryFilter').value;
         const location_id = document.getElementById('locationFilter').value;
-        fetchAssets(token, search, category_id, location_id); // Panggil fetchAssets dengan parameter
+        fetchAssets(token, search, category_id, location_id); // Panggil fetchAssets
     });
 
     document.getElementById('clearFilterButton').addEventListener('click', () => {
@@ -419,14 +444,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('locationFilter').value = '';
         fetchAssets(token); // Muat ulang aset tanpa filter
     });
-
-    // Event listener untuk tombol "Tambah Aset"
-    const addAssetButton = document.getElementById('addAssetButton');
-    if (addAssetButton) {
-        addAssetButton.addEventListener('click', () => {
-            window.location.href = '/add-asset.html';
-        });
-    }
 
     // Logout functionality
     document.getElementById('logoutButton').addEventListener('click', () => {

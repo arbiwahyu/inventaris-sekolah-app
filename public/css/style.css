@@ -1,96 +1,234 @@
+/* public/css/style.css */
+
+/* Umum: Box Sizing */
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Ubah dari center ke flex-start agar konten dimulai dari atas */
     min-height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    padding: 20px; /* Tambahkan padding agar tidak terlalu mepet ke tepi */
 }
-.login-container, .dashboard-container {
+
+.container {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 90%;
-    box-sizing:border-box;
-    margin: 20px;
+    max-width: 900px; /* Lebarkan sedikit container untuk dashboard */
+    width: 100%; /* Akan mengambil 100% lebar yang tersedia hingga max-width */
+    margin: 20px auto; /* Tambah margin dan auto untuk centering */
+    overflow-x: auto; /* Agar container juga bisa di-scroll jika ada konten lebar */
+}
+
+h1, h2, h3 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    color: #666;
     text-align: center;
 }
+
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     text-align: left;
 }
+
 label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #555;
 }
-input[type="text"], input[type="password"] {
-    width: calc(100% - 20px);
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+input[type="url"],
+textarea,
+select {
+    width: 100%; /* Mengisi penuh lebar parent */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
+    box-sizing: border-box; /* Pastikan padding tidak menambah lebar total */
 }
+
 button {
     background-color: #007bff;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    margin-right: 5px; /* Sedikit jarak antar tombol */
+    margin-top: 10px; /* Jarak dari atas */
+    transition: background-color 0.3s ease;
 }
+
 button:hover {
     background-color: #0056b3;
 }
+
+/* Gaya khusus untuk tombol-tombol edit/delete/borrow/return di tabel */
+.edit-btn, .delete-btn, .borrow-btn, .return-btn {
+    padding: 6px 10px;
+    font-size: 14px;
+    margin-right: 5px;
+}
+.edit-btn { background-color: #ffc107; color: #333; }
+.edit-btn:hover { background-color: #e0a800; }
+.delete-btn { background-color: #dc3545; }
+.delete-btn:hover { background-color: #c82333; }
+.borrow-btn { background-color: #28a745; }
+.borrow-btn:hover { background-color: #218838; }
+.return-btn { background-color: #17a2b8; }
+.return-btn:hover { background-color: #138496; }
+
+
+/* Layout Tombol di Dashboard: Buat mereka sejajar */
+.dashboard-container button {
+    display: inline-block; /* Agar tombol-tombol bersebelahan */
+    /* margin-bottom: 10px; */ /* Sesuaikan jika perlu jarak bawah */
+}
+/* Untuk tombol di baris yang sama, seperti Tambah Aset Baru dan Manajemen Pengguna */
+.dashboard-actions {
+    margin-bottom: 20px;
+    text-align: center; /* Pusatkan tombol-tombol aksi utama */
+}
+.dashboard-actions button {
+    margin: 5px; /* Jarak antar tombol di grup aksi */
+}
+
+
+/* Gaya untuk Pencarian dan Filter */
+.filter-section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    display: flex; /* Gunakan flexbox untuk layout sejajar */
+    flex-wrap: wrap; /* Izinkan wrap ke baris baru di layar kecil */
+    gap: 10px; /* Jarak antar elemen */
+    align-items: center; /* Tengahkan vertikal */
+}
+.filter-section input,
+.filter-section select,
+.filter-section button {
+    /* flex-grow: 1; */ /* Biarkan elemen tumbuh mengisi ruang, opsional */
+    min-width: 150px; /* Lebar minimum agar tidak terlalu sempit */
+}
+/* Atur lebar input/select agar tidak terlalu lebar */
+.filter-section input[type="text"] {
+    width: 300px; /* Lebar default untuk input search */
+    max-width: 100%;
+}
+.filter-section select {
+    width: auto; /* Biarkan select menyesuaikan kontennya */
+    max-width: 100%;
+}
+
+
+/* Gaya Tabel Umum */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
+    /* display: block; */ /* Jangan display block di sini jika ingin scroll horizontal, nanti di media query */
+    overflow-x: auto; /* Untuk tampilan desktop, jika tabel terlalu lebar */
+    white-space: nowrap; /* Mencegah teks dalam sel pecah baris saat scroll */
 }
+
 th, td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 12px; /* Tambah padding agar lebih lega */
     text-align: left;
-    white-space: normal;
+    white-space: normal; /* Izinkan teks pecah baris lagi di dalam sel */
+    vertical-align: top; /* Pastikan konten sel di atas */
 }
+
 th {
-    background-color: #f2f2f2;
+    background-color: #e9ecef; /* Warna header yang lebih terang */
+    color: #495057;
+    font-weight: bold;
 }
 
-/* Media Query untuk Layar Kecil (misalnya, ponsel di bawah 600px) */
-@media (max-width: 600px) {
-    .login-container, .dashboard-container {
-        padding: 20px; /* Kurangi padding */
-        width: 95%; /* Lebih lebar di ponsel */
+/* Gaya Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top, lebih tinggi dari elemen lain */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ more opacity */
+    padding-top: 60px; /* Sedikit padding dari atas */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* Jarak dari atas dan tengah */
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%; /* Lebar di layar kecil */
+    max-width: 700px; /* Lebar maksimal di desktop */
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 32px; /* Lebih besar */
+    font-weight: bold;
+    line-height: 1; /* Atur line-height agar x tidak terlalu tinggi */
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Responsive Design (Media Queries) */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px auto;
     }
 
-    h1 {
-        font-size: 24px; /* Kurangi ukuran font judul */
+    .filter-section {
+        flex-direction: column; /* Tumpuk elemen filter secara vertikal */
+        align-items: stretch; /* Regangkan elemen agar selebar parent */
+    }
+    .filter-section input,
+    .filter-section select,
+    .filter-section button {
+        width: 100%; /* Full width di layar kecil */
+        margin-right: 0;
     }
 
-    .form-group label {
-        font-size: 14px;
-    }
-
-    input[type="text"], input[type="password"], button {
-        font-size: 14px; /* Kurangi ukuran font input/button */
-        padding: 8px;
-    }
-
-    /* Contoh: Jika ada navigasi, bisa diubah menjadi stack vertikal */
-    /* .navbar ul {
-        flex-direction: column;
-    } */
-
-    /* Untuk tabel di ponsel, Anda bisa ubah display menjadi block atau menggunakan pattern Card */
-    /* Ini akan membuat setiap baris tabel menjadi seperti 'kartu' di ponsel */
+    /* Untuk membuat tabel menjadi kartu di layar kecil */
     table, thead, tbody, th, td, tr {
         display: block;
     }
@@ -102,60 +240,35 @@ th {
     tr {
         border: 1px solid #ccc;
         margin-bottom: 10px;
-        display: block; /* Agar setiap baris menjadi blok terpisah */
+        display: block;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Tambahkan shadow */
+        border-radius: 5px; /* Sudut sedikit melengkung */
     }
     td {
-        border: none; /* Hapus border antar sel */
+        border: none;
         border-bottom: 1px solid #eee;
         position: relative;
         padding-left: 50%; /* Beri ruang untuk label */
-        text-align: right; /* Konten sel ke kanan */
+        text-align: right;
+        font-size: 14px; /* Kecilkan font */
+    }
+    td:last-child {
+        border-bottom: 0; /* Hapus border bawah pada sel terakhir */
     }
     td:before {
-        content: attr(data-label); /* Tampilkan label kolom */
+        content: attr(data-label);
         position: absolute;
-        left: 6px;
+        left: 10px; /* Lebih ke kiri */
         width: 45%;
         padding-right: 10px;
         white-space: nowrap;
         text-align: left;
         font-weight: bold;
+        color: #777; /* Warna label */
     }
-}
 
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 10% auto; /* 10% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    max-width: 600px;
-    border-radius: 8px;
-    position: relative;
-}
-
-.close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+    .modal-content {
+        width: 95%; /* Lebih lebar di ponsel */
+        padding: 20px;
+    }
 }

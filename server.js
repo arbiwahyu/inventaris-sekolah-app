@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000; // Use port 3000 by default
 // --- START: Tambahkan import routes baru di sini ---
 const authRoutes = require('./routes/authRoutes');
 const assetRoutes = require('./routes/assetRoutes');
-//const userRoutes = require('./routes/userRoutes');       // Uncomment jika sudah membuat file ini
+const userRoutes = require('./routes/userRoutes');       // Uncomment jika sudah membuat file ini
 const locationRoutes = require('./routes/locationRoutes'); // Uncomment jika sudah membuat file ini
 const categoryRoutes = require('./routes/categoryRoutes'); // Uncomment jika sudah membuat file ini
 const borrowRoutes = require('./routes/borrowRoutes'); // Uncomment jika sudah membuat file ini
@@ -63,10 +63,10 @@ app.get('/api/assets', async (req, res) => {
 // Daftarkan API Routes baru
 app.use('/api/auth', authRoutes);
 app.use('/api/assets', assetRoutes);
-//app.use('/api/users', userRoutes);       // Uncomment jika sudah membuat file ini
+app.use('/api/users', userRoutes);       // Uncomment jika sudah membuat file ini
 app.use('/api/locations', locationRoutes); // Uncomment jika sudah membuat file ini
 app.use('/api/categories', categoryRoutes); // Uncomment jika sudah membuat file ini
-app.use('/api/borrows', borrowRoutes); // Uncomment jika sudah membuat file ini
+app.use('/api/borrow', borrowRoutes); // Uncomment jika sudah membuat file ini
 // --- END: Tambahkan API Routes di sini ---
 
 // Error handling middleware (optional, tapi disarankan untuk catch error)
