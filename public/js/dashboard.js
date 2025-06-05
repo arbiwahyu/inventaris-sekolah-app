@@ -1,47 +1,52 @@
 // public/js/dashboard.js
 
-// --- Definisi Fungsi-fungsi Bantu (Ditempatkan di bagian atas file) ---
+// --- Definisi Fungsi-fungsi Bantu (Ditempatkan di bagian atas file untuk mencegah ReferenceError) ---
 
-// Fungsi untuk memuat opsi kategori dan lokasi ke dropdown filter
-async function loadFilterOptions(token) {
+// Fungsi untuk memuat opsi kategori dan lokasi ke dropdown filter dan modal
+async function loadCategoriesAndLocations(token, categorySelectId, locationSelectId, selectedCategoryId = null, selectedLocationId = null) {
     try {
         // Memuat Kategori
         const categoriesResponse = await fetch('/api/categories', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (!categoriesResponse.ok) throw new Error('Gagal memuat kategori filter.');
+        if (!categoriesResponse.ok) throw new Error('Gagal memuat kategori.');
         const categories = await categoriesResponse.json();
-        const categoryFilterSelect = document.getElementById('categoryFilter');
-        // Kosongkan dulu agar tidak duplikat opsi jika fungsi dipanggil lagi
-        categoryFilterSelect.innerHTML = '<option value="">Semua Kategori</option>';
+        const categorySelect = document.getElementById(categorySelectId);
+        categorySelect.innerHTML = '<option value="">-- Pilih Kategori --</option>';
         categories.forEach(cat => {
             const option = document.createElement('option');
             option.value = cat.id;
             option.textContent = cat.nama_kategori;
-            categoryFilterSelect.appendChild(option);
+            categorySelect.appendChild(option);
+            if (selectedCategoryId !== null && cat.id === selectedCategoryId) {
+                option.selected = true;
+            }
         });
 
         // Memuat Lokasi
         const locationsResponse = await fetch('/api/locations', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        if (!locationsResponse.ok) throw new Error('Gagal memuat lokasi filter.');
+        if (!locationsResponse.ok) throw new Error('Gagal memuat lokasi.');
         const locations = await locationsResponse.json();
-        const locationFilterSelect = document.getElementById('locationFilter');
-        // Kosongkan dulu agar tidak duplikat opsi
-        locationFilterSelect.innerHTML = '<option value="">Semua Lokasi</option>';
+        const locationSelect = document.getElementById(locationSelectId);
+        locationSelect.innerHTML = '<option value="">-- Pilih Lokasi --</option>';
         locations.forEach(loc => {
             const option = document.createElement('option');
             option.value = loc.id;
             option.textContent = loc.nama_lokasi;
-            locationFilterSelect.appendChild(option);
+            locationSelect.appendChild(option);
+            if (selectedLocationId !== null && loc.id === selectedLocationId) {
+                option.selected = true;
+            }
         });
 
     } catch (error) {
-        console.error('Error loading filter options:', error);
-        alert('Terjadi kesalahan saat memuat opsi filter: ' + error.message);
+        console.error('Error loading categories/locations:', error);
+        alert('Terjadi kesalahan saat memuat daftar kategori atau lokasi: ' + error.message);
     }
 }
+
 
 // Fungsi untuk memuat daftar aset (dengan pencarian dan filter)
 async function fetchAssets(token, search = '', category_id = '', location_id = '') {
@@ -133,14 +138,14 @@ async function fetchAssets(token, search = '', category_id = '', location_id = '
             // Tombol Edit
             const editButton = document.createElement('button');
             editButton.textContent = 'Edit';
-            editButton.classList.add('edit-btn');
+            editButton.classList.add('btn', 'btn-warning', 'btn-sm'); // Class Bootstrap
             editButton.onclick = () => window.location.href = `/edit-asset.html?id=${asset.id}`;
             actionsCell.appendChild(editButton);
 
             // Tombol Hapus
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Hapus';
-            deleteButton.classList.add('delete-btn');
+            deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'ml-1'); // Class Bootstrap
             deleteButton.onclick = () => deleteAsset(asset.id, token);
             actionsCell.appendChild(deleteButton);
 
@@ -148,13 +153,13 @@ async function fetchAssets(token, search = '', category_id = '', location_id = '
             if (asset.status === 'Tersedia') {
                 const borrowButton = document.createElement('button');
                 borrowButton.textContent = 'Pinjam';
-                borrowButton.classList.add('borrow-btn');
+                borrowButton.classList.add('btn', 'btn-success', 'btn-sm', 'ml-1'); // Class Bootstrap
                 borrowButton.onclick = () => openBorrowModal(asset, token);
                 actionsCell.appendChild(borrowButton);
             } else if (asset.status === 'Dipinjam') {
                 const returnButton = document.createElement('button');
                 returnButton.textContent = 'Kembalikan';
-                returnButton.classList.add('return-btn');
+                returnButton.classList.add('btn', 'btn-info', 'btn-sm', 'ml-1'); // Class Bootstrap
                 returnButton.onclick = () => openReturnModal(asset, token);
                 actionsCell.appendChild(returnButton);
             }
@@ -246,6 +251,7 @@ async function openReturnModal(asset, token) {
         returnBorrowRecordId.value = activeBorrowRecord.id;
         returnAssetName.textContent = asset.nama_aset;
         returnAssetNomorInventaris.textContent = asset.nomor_inventaris;
+        returnAssetNomorInventaris.textContent = asset.nomor_inventaris; // Duplikasi, bisa dihapus
         returnMessage.textContent = ''; // Bersihkan pesan sebelumnya
         returnForm.reset(); // Reset form setiap kali modal dibuka
         document.getElementById('returnCondition').value = activeBorrowRecord.borrow_condition || 'Baik'; // Isi kondisi awal
@@ -260,12 +266,27 @@ async function openReturnModal(asset, token) {
 }
 
 
+// Fungsi untuk membuka modal tambah aset
+async function openAddAssetModal(token) {
+    const addAssetModal = document.getElementById('addAssetModal'); // ID modal tambah aset
+    const addAssetFormModal = document.getElementById('addAssetFormModal'); // ID form tambah aset
+    const addAssetMessageModal = document.getElementById('addAssetMessageModal'); // ID pesan
+
+    addAssetFormModal.reset(); // Reset form
+    addAssetMessageModal.textContent = ''; // Bersihkan pesan
+
+    // Muat dropdown kategori dan lokasi untuk form tambah aset
+    await loadCategoriesAndLocations(token, 'category_id_modal', 'location_id_modal');
+
+    addAssetModal.style.display = 'block';
+}
+
+
 // --- Event Listener DOMContentLoaded (Kode utama yang dieksekusi setelah DOM siap) ---
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-        // Jika tidak ada token, redirect ke halaman login
-        window.location.href = '/'; // Atau '/index.html'
+        window.location.href = '/';
         return;
     }
 
@@ -273,12 +294,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Variabel-variabel ini HARUS dideklarasikan di sini karena elemen-elemennya diakses di sini
     const borrowModal = document.getElementById('borrowModal');
     const returnModal = document.getElementById('returnModal');
-    const closeButtons = document.querySelectorAll('.close-button');
-
+    const addAssetModal = document.getElementById('addAssetModal'); // Modal Tambah Aset
+    
+    // Menutup modal jika klik pada tombol close atau di luar area konten
+    const closeButtons = document.querySelectorAll('.close-button'); // Ambil semua close-button
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             borrowModal.style.display = 'none';
             returnModal.style.display = 'none';
+            addAssetModal.style.display = 'none';
         });
     });
 
@@ -290,9 +314,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (event.target == returnModal) {
             returnModal.style.display = 'none';
         }
+        if (event.target == addAssetModal) {
+            addAssetModal.style.display = 'none';
+        }
     });
 
-    // Event listener untuk submit form peminjaman
+    // Event listener untuk submit form peminjaman (Sudah ada)
     const borrowForm = document.getElementById('borrowForm');
     if (borrowForm) { // Pastikan form ada
         borrowForm.addEventListener('submit', async (event) => {
@@ -340,7 +367,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
-    // Event listener untuk submit form pengembalian
+    // Event listener untuk submit form pengembalian (Sudah ada)
     const returnForm = document.getElementById('returnForm');
     if (returnForm) { // Pastikan form ada
         returnForm.addEventListener('submit', async (event) => {
@@ -382,35 +409,111 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    // Event listener untuk submit form TAMBAH ASET (Baru)
+    const addAssetFormModal = document.getElementById('addAssetFormModal'); // ID form di modal
+    if (addAssetFormModal) {
+        addAssetFormModal.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // Mengambil data form menggunakan FormData
+            const formData = new FormData();
+            formData.append('nomor_inventaris', document.getElementById('nomor_inventaris_modal').value);
+            formData.append('nama_aset', document.getElementById('nama_aset_modal').value);
+            formData.append('description', document.getElementById('description_modal').value || ''); // Pastikan deskripsi ada
+            formData.append('category_id', document.getElementById('category_id_modal').value);
+            formData.append('location_id', document.getElementById('location_id_modal').value);
+            formData.append('condition', document.getElementById('condition_modal').value);
+            formData.append('penanggung_jawab', document.getElementById('penanggung_jawab_modal').value);
+            formData.append('tanggal_perolehan', document.getElementById('tanggal_perolehan_modal').value);
+            formData.append('harga_perolehan', parseFloat(document.getElementById('harga_perolehan_modal').value) || 0);
+            formData.append('status', document.getElementById('status_modal').value);
+
+            // Cek apakah ada file gambar yang dipilih untuk upload
+            const fotoFileModalInput = document.getElementById('foto_file_modal'); // Inisialisasi di sini
+            if (fotoFileModalInput.files && fotoFileModalInput.files[0]) {
+                formData.append('assetImage', fotoFileModalInput.files[0]);
+            } else {
+                // Jika tidak ada file baru di-upload, kirimkan URL kosong agar backend tahu tidak ada update gambar
+                formData.append('foto_url', ''); // Kirim string kosong
+            }
+
+            const addAssetMessageModal = document.getElementById('addAssetMessageModal');
+
+            try {
+                const response = await fetch('/api/assets', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData // Kirim FormData langsung
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    addAssetMessageModal.style.color = 'green';
+                    addAssetMessageModal.textContent = 'Aset berhasil ditambahkan!';
+                    setTimeout(() => {
+                        addAssetModal.style.display = 'none';
+                        fetchAssets(token); // Muat ulang daftar aset
+                    }, 1000);
+                } else {
+                    addAssetMessageModal.style.color = 'red';
+                    addAssetMessageModal.textContent = data.message || 'Gagal menambahkan aset.';
+                }
+            } catch (error) {
+                console.error('Error adding asset:', error);
+                addAssetMessageModal.style.color = 'red';
+                addAssetMessageModal.textContent = 'Server error. Gagal menambahkan aset: ' + error.message;
+            }
+        });
+    }
+
+
     // Inisialisasi awal setelah DOM dimuat dan token diverifikasi
     try {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const user = JSON.parse(window.atob(base64));
 
-        document.getElementById('loggedInUser').textContent = user.username;
-        document.getElementById('userRole').textContent = user.role;
+        document.getElementById('loggedInUserTop').textContent = user.username;
+        // Jika Anda ingin menampilkan role, tambahkan elemen <span id="userRoleTop"> di HTML
+        // dan uncomment baris ini:
+        // document.getElementById('userRoleTop').textContent = `(${user.role})`;
+
 
         // Tampilkan/sembunyikan tombol Manajemen Pengguna berdasarkan peran
-        const userManagementButton = document.getElementById('userManagementButton');
-        if (userManagementButton) {
-            if (user.role === 'admin') { // Hanya admin yang bisa melihat
+        const userManagementButton = document.getElementById('userManagementButtonSB');
+        const navUserManagement = document.getElementById('navUserManagement');
+        if (userManagementButton && navUserManagement) {
+            if (user.role === 'admin') {
                 userManagementButton.style.display = 'inline-block';
+                navUserManagement.style.display = 'block'; // Tampilkan menu di navbar
                 userManagementButton.addEventListener('click', () => {
                     window.location.href = '/user-management.html';
                 });
             } else {
-                userManagementButton.style.display = 'none'; // Sembunyikan untuk peran lain
+                userManagementButton.style.display = 'none';
+                navUserManagement.style.display = 'none'; // Sembunyikan menu di navbar
             }
         }
 
+        // Tampilkan/sembunyikan menu Laporan berdasarkan peran (hanya admin)
+        const navReports = document.getElementById('navReports'); // Ambil elemen li nav item
+        if (navReports) { // Pastikan elemen ditemukan
+            if (user.role === 'admin' || user.role === 'staff') {
+                navReports.style.display = 'block'; // Tampilkan nav item
+            } else {
+                navReports.style.display = 'none'; // Sembunyikan untuk peran lain
+            }
+        }
         // Tampilkan/sembunyikan tombol Tambah Aset berdasarkan peran (misal admin dan staff)
-        const addAssetButton = document.getElementById('addAssetButton');
+        const addAssetButton = document.getElementById('openAddAssetModalBtn');
         if (addAssetButton) {
-            if (user.role === 'admin' || user.role === 'staff') { // Misalnya admin dan staff bisa tambah aset
+            if (user.role === 'admin' || user.role === 'staff') {
                 addAssetButton.style.display = 'inline-block';
                 addAssetButton.addEventListener('click', () => {
-                    window.location.href = '/add-asset.html'; // Ganti dengan URL halaman tambah aset
+                    openAddAssetModal(token); // Membuka modal
                 });
             } else {
                 addAssetButton.style.display = 'none';
@@ -419,10 +522,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
         // Muat opsi kategori dan lokasi ke dropdown filter
-        await loadFilterOptions(token); // Panggil fungsi yang didefinisikan di atas
+        await loadCategoriesAndLocations(token, 'categoryFilter', 'locationFilter');
 
         // Muat daftar aset awal (tanpa filter)
-        await fetchAssets(token); // Panggil fungsi yang didefinisikan di atas
+        await fetchAssets(token);
 
     } catch (error) {
         console.error("Error decoding token or fetching user data:", error);
@@ -435,19 +538,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         const search = document.getElementById('searchInput').value;
         const category_id = document.getElementById('categoryFilter').value;
         const location_id = document.getElementById('locationFilter').value;
-        fetchAssets(token, search, category_id, location_id); // Panggil fetchAssets
+        fetchAssets(token, search, category_id, location_id);
     });
 
     document.getElementById('clearFilterButton').addEventListener('click', () => {
         document.getElementById('searchInput').value = '';
         document.getElementById('categoryFilter').value = '';
         document.getElementById('locationFilter').value = '';
-        fetchAssets(token); // Muat ulang aset tanpa filter
+        fetchAssets(token);
     });
 
     // Logout functionality
-    document.getElementById('logoutButton').addEventListener('click', () => {
-        localStorage.removeItem('token');
-        window.location.href = '/';
-    });
+    const logoutButtonSB = document.getElementById('logoutButtonSB');
+    if (logoutButtonSB) {
+        logoutButtonSB.addEventListener('click', () => {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        });
+    }
 });

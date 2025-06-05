@@ -1,31 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Pengguna - Inventaris Sekolah</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div class="container">
-        <h2>Manajemen Pengguna</h2>
-        <button id="addUserButton">Tambah Pengguna Baru</button>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Manajemen Pengguna Aplikasi Inventaris Sekolah">
+    <meta name="author" content="Arbi Wahyu">
 
-        <h3>Daftar Pengguna</h3>
-        <table id="usersTable">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Nama Lengkap</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-        <button onclick="window.location.href='/dashboard.html'">Kembali ke Dashboard</button>
+    <title>Manajemen Pengguna - Inventaris Sekolah</title>
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=202506021800"> </head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Inventaris Sekolah</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item"> <a class="nav-link" href="/dashboard.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Aset</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Manajemen
+            </div>
+
+            <li class="nav-item active" id="navUserManagement"> <a class="nav-link" href="/user-management.html">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Pengguna</span>
+                </a>
+            </li>
+            <li class="nav-item" id="navReports"> <a class="nav-link" href="/reports.html">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Laporan</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="loggedInUserTop"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg"> 
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModalSB">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="container-fluid">
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Manajemen Pengguna</h1>
+                        <button id="addUserButton" class="btn btn-primary btn-sm shadow-sm"><i class="fas fa-user-plus fa-sm text-white-50"></i> Tambah Pengguna Baru</button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Pengguna</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <th>Nama Lengkap</th>
+                                                    <th>Email</th>
+                                                    <th>Role</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="window.location.href='/dashboard.html'" class="btn btn-secondary mt-3">Kembali ke Dashboard</button>
+
+                </div>
+                </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Inventaris Sekolah 2025</span>
+                    </div>
+                </div>
+            </footer>
+            </div>
+        </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModalSB" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Siap untuk Keluar?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Pilih "Logout" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="#" id="logoutButtonSB">Logout</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="userModal" class="modal">
@@ -35,36 +164,41 @@
             <form id="userForm">
                 <input type="hidden" id="userId"> <div class="form-group">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" required>
+                    <input type="text" id="username" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" id="password" placeholder="Kosongkan jika tidak ingin mengubah">
+                    <input type="password" id="password" class="form-control" placeholder="Kosongkan jika tidak ingin mengubah">
                 </div>
                 <div class="form-group">
                     <label for="nama_lengkap">Nama Lengkap:</label>
-                    <input type="text" id="nama_lengkap">
+                    <input type="text" id="nama_lengkap" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" id="email">
+                    <input type="email" id="email" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="role">Role:</label>
-                    <select id="role" required>
+                    <select id="role" class="form-control" required>
                         <option value="admin">Admin</option>
                         <option value="staff">Staf</option>
                         <option value="guru">Guru</option>
                         <option value="siswa">Siswa</option>
                     </select>
                 </div>
-                <button type="submit">Simpan Pengguna</button>
-                <p id="userMessage" style="color: red; margin-top: 10px;"></p>
+                <button type="submit" class="btn btn-primary mt-2">Simpan Pengguna</button>
+                <p id="userMessage" class="mt-2" style="color: red;"></p>
             </form>
         </div>
     </div>
 
-    <script src="js/userManagement.js"></script>
-    <script src="js/authCheck.js"></script>
-</body>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="js/userManagement.js?v=202506021800"></script> <script src="js/authCheck.js?v=202506021800"></script> </body>
 </html>

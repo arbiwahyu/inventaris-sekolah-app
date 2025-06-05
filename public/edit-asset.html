@@ -1,69 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Edit Aset Aplikasi Inventaris Sekolah">
+    <meta name="author" content="Arbi Wahyu">
+
     <title>Edit Aset - Inventaris Sekolah</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=202506021800">
 </head>
-<body>
-    <div class="container">
-        <h2>Edit Aset</h2>
-        <form id="assetForm">
-            <div class="form-group">
-                <label for="nomor_inventaris">Nomor Inventaris:</label>
-                <input type="text" id="nomor_inventaris" name="nomor_inventaris" required>
+
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Inventaris Sekolah</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/dashboard.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Aset</span></a>
+            </li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Manajemen</div>
+            <li class="nav-item" id="navUserManagement">
+                <a class="nav-link" href="/user-management.html">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Pengguna</span>
+                </a>
+            </li>
+             <li class="nav-item" id="navReports"> <a class="nav-link" href="/reports.html">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Laporan</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-            <div class="form-group">
-                <label for="nama_aset">Nama Aset:</label>
-                <input type="text" id="nama_aset" name="nama_aset" required>
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="loggedInUserTop"></span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModalSB">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="container-fluid">
+
+                    <h1 class="h3 mb-4 text-gray-800">Edit Aset</h1>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Form Aset</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="assetForm" enctype="multipart/form-data"> <input type="hidden"
+                                            id="assetId">
+                                        <input type="hidden" id="assetId">
+                                        <div class="form-group">
+                                            <label for="nomor_inventaris">Nomor Inventaris:</label>
+                                            <input type="text" id="nomor_inventaris" name="nomor_inventaris"
+                                                class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama_aset">Nama Aset:</label>
+                                            <input type="text" id="nama_aset" name="nama_aset" class="form-control"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Deskripsi:</label>
+                                            <textarea id="description" name="description" rows="3"
+                                                class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="category_id">Kategori:</label>
+                                            <select id="category_id" name="category_id" class="form-control" required>
+                                                <option value="">-- Pilih Kategori --</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location_id">Lokasi:</label>
+                                            <select id="location_id" name="location_id" class="form-control" required>
+                                                <option value="">-- Pilih Lokasi --</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="condition">Kondisi:</label>
+                                            <input type="text" id="condition" name="condition" class="form-control"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="penanggung_jawab">Penanggung Jawab:</label>
+                                            <input type="text" id="penanggung_jawab" name="penanggung_jawab"
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tanggal_perolehan">Tanggal Perolehan:</label>
+                                            <input type="date" id="tanggal_perolehan" name="tanggal_perolehan"
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="harga_perolehan">Harga Perolehan:</label>
+                                            <input type="number" id="harga_perolehan" name="harga_perolehan" step="0.01"
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="foto_url">Foto Aset Saat Ini:</label>
+                                            <img id="current_foto_preview" src="#" alt="Foto Aset Saat Ini"
+                                                style="max-width: 200px; max-height: 200px; margin-bottom: 10px; display: none;">
+                                            <p id="current_foto_url_text" style="font-size: 0.9em; color: #666;">URL:
+                                                <span id="current_foto_url_span"></span></p>
+                                            <label for="foto_file_edit" class="mt-3">Ganti Foto Aset (Upload
+                                                Baru):</label>
+                                            <input type="file" id="foto_file_edit" name="assetImage"
+                                                class="form-control-file"> <small class="form-text text-muted">Maksimal
+                                                5MB (JPG, JPEG, PNG, GIF). Kosongkan jika tidak ingin mengubah.</small>
+                                            <img id="foto_preview_edit" src="#" alt="Pratinjau Foto Baru"
+                                                style="max-width: 150px; max-height: 150px; margin-top: 10px; display: none;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="status">Status:</label>
+                                            <input type="text" id="status" name="status" class="form-control"
+                                                value="Tersedia" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-3">Simpan Perubahan</button>
+                                        <button type="button" onclick="window.location.href='/dashboard.html'"
+                                            class="btn btn-secondary mt-3 ml-2">Kembali</button>
+                                        <p id="message" class="mt-3" style="color: red;"></p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="form-group">
-                <label for="description">Deskripsi:</label>
-                <textarea id="description" name="description" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="category_id">Kategori:</label>
-                <select id="category_id" name="category_id" required>
-                    <option value="">-- Pilih Kategori --</option>
-                    </select>
-            </div>
-            <div class="form-group">
-                <label for="location_id">Lokasi:</label>
-                <select id="location_id" name="location_id" required>
-                    <option value="">-- Pilih Lokasi --</option>
-                    </select>
-            </div>
-            <div class="form-group">
-                <label for="condition">Kondisi:</label>
-                <input type="text" id="condition" name="condition" required>
-            </div>
-            <div class="form-group">
-                <label for="penanggung_jawab">Penanggung Jawab:</label>
-                <input type="text" id="penanggung_jawab" name="penanggung_jawab">
-            </div>
-            <div class="form-group">
-                <label for="tanggal_perolehan">Tanggal Perolehan:</label>
-                <input type="date" id="tanggal_perolehan" name="tanggal_perolehan">
-            </div>
-            <div class="form-group">
-                <label for="harga_perolehan">Harga Perolehan:</label>
-                <input type="number" id="harga_perolehan" name="harga_perolehan" step="0.01">
-            </div>
-            <div class="form-group">
-                <label for="foto_url">URL Foto:</label>
-                <input type="url" id="foto_url" name="foto_url">
-            </div>
-            <div class="form-group">
-                <label for="status">Status:</label>
-                <input type="text" id="status" name="status" required>
-            </div>
-            <button type="submit">Simpan Perubahan</button>
-            <button type="button" onclick="window.location.href='/dashboard.html'">Batal</button>
-            <p id="message" style="color: red; margin-top: 10px;"></p>
-        </form>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Inventaris Sekolah 2025</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-    <script src="js/editAsset.js"></script>
-    <script src="js/authCheck.js"></script>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <div class="modal fade" id="logoutModalSB" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Siap untuk Keluar?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Pilih "Logout" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="#" id="logoutButtonSB">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="js/editAsset.js?v=202506021800"></script>
+    <script src="js/authCheck.js?v=202506021800"></script>
 </body>
+
 </html>

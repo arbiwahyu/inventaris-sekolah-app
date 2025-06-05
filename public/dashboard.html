@@ -1,51 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dashboard Aplikasi Inventaris Sekolah">
+    <meta name="author" content="Arbi Wahyu">
+
     <title>Dashboard - Inventaris Sekolah</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=202506021800">
 </head>
-<body>
-    <div class="dashboard-container">
-        <h2>Selamat Datang di Dashboard Inventaris!</h2>
-        <p>Anda telah berhasil login sebagai <span id="loggedInUser"></span> (<span id="userRole"></span>).</p>
-        <p>Ini adalah tempat di mana Anda akan melihat dan mengelola aset sekolah.</p>
 
-        <div class="dashboard-actions">
-            <button id="addAssetButton">Tambah Aset Baru</button>
-            <button id="userManagementButton">Manajemen Pengguna</button>
+<body id="page-top">
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Inventaris Sekolah</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/dashboard.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Aset</span></a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Manajemen
+            </div>
+
+            <li class="nav-item" id="navUserManagement">
+                <a class="nav-link" href="/user-management.html">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Pengguna</span>
+                </a>
+            </li>
+
+            <li class="nav-item" id="navReports"> <a class="nav-link" href="/reports.html">
+                    <i class="fas fa-fw fa-file-alt"></i>
+                    <span>Laporan</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="loggedInUserTop"></span>
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModalSB">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- <div class="modal fade" id="logoutModalSB" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Siap untuk Keluar?</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">Pilih "Logout" di bawah jika Anda siap mengakhiri sesi Anda saat
+                                    ini.</div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-primary" href="#" id="confirmLogoutButtonSB">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </nav>
+
+
+
+
+
+                <div class="container-fluid">
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard Aset Inventaris</h1>
+                        <div class="dashboard-actions d-none d-sm-inline-block">
+                            <button class="btn btn-primary btn-sm shadow-sm" id="openAddAssetModalBtn"><i
+                                    class="fas fa-plus fa-sm text-white-50"></i> Tambah Aset Baru</button>
+                            <a href="/user-management.html" class="btn btn-info btn-sm shadow-sm"
+                                id="userManagementButtonSB" style="display: none;"><i
+                                    class="fas fa-users fa-sm text-white-50"></i> Manajemen Pengguna</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Aset</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="filter-section">
+                                        <input type="text" id="searchInput" class="form-control"
+                                            placeholder="Cari aset (Nomor, Nama, PJ, Deskripsi)">
+                                        <select id="categoryFilter" class="form-control">
+                                            <option value="">Semua Kategori</option>
+                                        </select>
+                                        <select id="locationFilter" class="form-control">
+                                            <option value="">Semua Lokasi</option>
+                                        </select>
+                                        <button id="applyFilterButton" class="btn btn-primary">Terapkan Filter</button>
+                                        <button id="clearFilterButton" class="btn btn-secondary">Hapus Filter</button>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="assetsTable" width="100%"
+                                            cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>No. Inventaris</th>
+                                                    <th>Nama Aset</th>
+                                                    <th>Kategori</th>
+                                                    <th>Lokasi</th>
+                                                    <th>Kondisi</th>
+                                                    <th>Penanggung Jawab</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Inventaris Sekolah 2025</span>
+                    </div>
+                </div>
+            </footer>
         </div>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-        <div class="filter-section">
-            <input type="text" id="searchInput" placeholder="Cari aset (Nomor, Nama, PJ, Deskripsi)">
-            <select id="categoryFilter">
-                <option value="">Semua Kategori</option>
-                </select>
-            <select id="locationFilter">
-                <option value="">Semua Lokasi</option>
-                </select>
-            <button id="applyFilterButton">Terapkan Filter</button>
-            <button id="clearFilterButton">Hapus Filter</button>
+    <div class="modal fade" id="logoutModalSB" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Siap untuk Keluar?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Pilih "Logout" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="#" id="logoutButtonSB">Logout</a>
+                </div>
+            </div>
         </div>
-
-        <h3>Daftar Aset</h3>
-        <table id="assetsTable">
-            <thead>
-                <tr>
-                    <th>No. Inventaris</th>
-                    <th>Nama Aset</th>
-                    <th>Kategori</th>
-                    <th>Lokasi</th>
-                    <th>Kondisi</th>
-                    <th>Penanggung Jawab</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                </tbody>
-        </table>
-        <button id="logoutButton">Logout</button>
     </div>
 
     <div id="borrowModal" class="modal">
@@ -56,22 +215,22 @@
                 <input type="hidden" id="borrowAssetId">
                 <div class="form-group">
                     <label for="borrowerName">Nama Peminjam:</label>
-                    <input type="text" id="borrowerName" required>
+                    <input type="text" id="borrowerName" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="returnDateExpected">Tanggal Kembali (Estimasi):</label>
-                    <input type="date" id="returnDateExpected">
+                    <input type="date" id="returnDateExpected" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="borrowCondition">Kondisi Saat Pinjam:</label>
-                    <input type="text" id="borrowCondition" value="Baik" required>
+                    <input type="text" id="borrowCondition" class="form-control" value="Baik" required>
                 </div>
                 <div class="form-group">
                     <label for="borrowNotes">Catatan:</label>
-                    <textarea id="borrowNotes" rows="3"></textarea>
+                    <textarea id="borrowNotes" rows="3" class="form-control"></textarea>
                 </div>
-                <button type="submit">Catat Peminjaman</button>
-                <p id="borrowMessage" style="color: red; margin-top: 10px;"></p>
+                <button type="submit" class="btn btn-primary mt-2">Catat Peminjaman</button>
+                <p id="borrowMessage" class="mt-2" style="color: red;"></p>
             </form>
         </div>
     </div>
@@ -84,19 +243,90 @@
                 <input type="hidden" id="returnBorrowRecordId">
                 <div class="form-group">
                     <label for="returnCondition">Kondisi Saat Kembali:</label>
-                    <input type="text" id="returnCondition" value="Baik" required>
+                    <input type="text" id="returnCondition" class="form-control" value="Baik" required>
                 </div>
                 <div class="form-group">
                     <label for="returnNotes">Catatan Pengembalian:</label>
-                    <textarea id="returnNotes" rows="3"></textarea>
+                    <textarea id="returnNotes" rows="3" class="form-control"></textarea>
                 </div>
-                <button type="submit">Catat Pengembalian</button>
-                <p id="returnMessage" style="color: red; margin-top: 10px;"></p>
+                <button type="submit" class="btn btn-primary mt-2">Catat Pengembalian</button>
+                <p id="returnMessage" class="mt-2" style="color: red;"></p>
             </form>
         </div>
     </div>
 
-    <script src="js/dashboard.js?v=202506021403"></script> 
-    <script src="js/authCheck.js?v=202506021403"></script> 
+    <div id="addAssetModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeAddAssetModalBtn">&times;</span>
+            <h3>Tambah Aset Baru</h3>
+            <form id="addAssetFormModal"> <input type="hidden" id="assetIdModal">
+                <div class="form-group">
+                    <label for="nomor_inventaris_modal">Nomor Inventaris:</label>
+                    <input type="text" id="nomor_inventaris_modal" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="nama_aset_modal">Nama Aset:</label>
+                    <input type="text" id="nama_aset_modal" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="description_modal">Deskripsi:</label>
+                    <textarea id="description_modal" name="description_modal" rows="3" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="category_id_modal">Kategori:</label>
+                    <select id="category_id_modal" name="category_id_modal" class="form-control" required>
+                        <option value="">-- Pilih Kategori --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="location_id_modal">Lokasi:</label>
+                    <select id="location_id_modal" name="location_id_modal" class="form-control" required>
+                        <option value="">-- Pilih Lokasi --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="condition_modal">Kondisi:</label>
+                    <input type="text" id="condition_modal" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="penanggung_jawab_modal">Penanggung Jawab:</label>
+                    <input type="text" id="penanggung_jawab_modal" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tanggal_perolehan_modal">Tanggal Perolehan:</label>
+                    <input type="date" id="tanggal_perolehan_modal" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="harga_perolehan_modal">Harga Perolehan:</label>
+                    <input type="number" id="harga_perolehan_modal" step="0.01" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="foto_url_modal">Upload Foto Asset:</label>
+                    <input type="file" id="foto_file_modal" name="assetImage" class="form-control-file"> <small
+                        class="form-text text-muted">Maksimal 5MB (JPG, JPEG, PNG, GIF).</small>
+                    <img id="foto_preview_modal" src="#" alt="Pratinjau Foto"
+                        style="max-width: 150px; max-height: 150px; margin-top: 10px; display: none;">
+                    <input type="hidden" id="foto_url_hidden_modal" name="foto_url_modal">
+                </div>
+                <div class="form-group">
+                    <label for="status_modal">Status:</label>
+                    <input type="text" id="status_modal" class="form-control" value="Tersedia" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Simpan Aset</button>
+                <p id="addAssetMessageModal" class="mt-2" style="color: red;"></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="js/dashboard.js?v=202506021800"></script>
+    <script src="js/authCheck.js?v=202506021800"></script>
 </body>
+
 </html>

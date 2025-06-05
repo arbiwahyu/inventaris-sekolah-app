@@ -11,6 +11,7 @@ const userRoutes = require('./routes/userRoutes');       // Uncomment jika sudah
 const locationRoutes = require('./routes/locationRoutes'); // Uncomment jika sudah membuat file ini
 const categoryRoutes = require('./routes/categoryRoutes'); // Uncomment jika sudah membuat file ini
 const borrowRoutes = require('./routes/borrowRoutes'); // Uncomment jika sudah membuat file ini
+const reportRoutes = require('./routes/reportRoutes'); // Uncomment jika sudah membuat file ini
 // --- END: Tambahkan import routes baru di sini ---
 
 
@@ -67,6 +68,7 @@ app.use('/api/users', userRoutes);       // Uncomment jika sudah membuat file in
 app.use('/api/locations', locationRoutes); // Uncomment jika sudah membuat file ini
 app.use('/api/categories', categoryRoutes); // Uncomment jika sudah membuat file ini
 app.use('/api/borrow', borrowRoutes); // Uncomment jika sudah membuat file ini
+app.use('/api/reports', reportRoutes); // Uncomment jika sudah membuat file ini
 // --- END: Tambahkan API Routes di sini ---
 
 // Error handling middleware (optional, tapi disarankan untuk catch error)

@@ -36,15 +36,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     messageElement.textContent = data.message || 'Login berhasil!';
 
                     console.log('[AUTH FLOW] Login successful.');
-                    console.log('[AUTH FLOW] Received token:', data.token); // LOG: Lihat token yang diterima
+                    console.log('[AUTH FLOW] Received token:', data.token);
 
                     if (data.token) {
                         localStorage.setItem('token', data.token); // Simpan token JWT
-                        console.log('[AUTH FLOW] Token stored in Local Storage. Redirecting...'); // LOG: Konfirmasi penyimpanan
-                        window.location.href = '/dashboard.html';
+                        console.log('[AUTH FLOW] Token stored in Local Storage. Redirecting...');
+                        setTimeout(() => {
+                            window.location.href = '/dashboard.html';
+                        }, 300); // Penundaan 50 milidetik (cukup singkat)
                     } else {
                         // Jika login sukses tapi token tidak ada
-                        console.error('[AUTH FLOW] Login successful, but no token received in response. Cannot proceed.'); // LOG ERROR
+                        console.error('[AUTH FLOW] Login successful, but no token received in response. Cannot proceed.');
                         messageElement.style.color = 'red';
                         messageElement.textContent = 'Login berhasil, tetapi token tidak ditemukan. Silakan coba lagi.';
                     }
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 // Menangani error jaringan atau parsing JSON
-                console.error('[AUTH FLOW] Error during login process:', error); // LOG ERROR: Error detail
+                console.error('[AUTH FLOW] Error during login process:', error);
                 messageElement.style.color = 'red';
                 messageElement.textContent = 'Terjadi kesalahan server. Mohon coba lagi nanti.';
 

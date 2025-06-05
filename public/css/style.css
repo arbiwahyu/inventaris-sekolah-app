@@ -1,55 +1,45 @@
 /* public/css/style.css */
 
-/* Umum: Box Sizing */
+/* Umum: Box Sizing untuk semua elemen */
 * {
     box-sizing: border-box;
 }
 
+/* Gaya untuk body (seharusnya tidak banyak di-override oleh SB Admin 2, tapi ini sebagai fallback) */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Ubah dari center ke flex-start agar konten dimulai dari atas */
-    min-height: 100vh;
+    font-family: 'Nunito', sans-serif; /* Menggunakan font Nunito dari SB Admin 2 */
     margin: 0;
-    background-color: #f0f0f0;
-    padding: 20px; /* Tambahkan padding agar tidak terlalu mepet ke tepi */
+    padding: 0;
+    background-color: #f8f9fc; /* Warna background default SB Admin 2 */
+    color: #333;
 }
 
+/* Container utama untuk form login dan manajemen pengguna */
 .container {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 900px; /* Lebarkan sedikit container untuk dashboard */
+    max-width: 900px; /* Lebar maksimal di desktop */
     width: 100%; /* Akan mengambil 100% lebar yang tersedia hingga max-width */
-    margin: 20px auto; /* Tambah margin dan auto untuk centering */
-    overflow-x: auto; /* Agar container juga bisa di-scroll jika ada konten lebar */
+    margin: 20px auto; /* Centering */
+    overflow-x: auto; /* Untuk memastikan konten di dalamnya bisa di-scroll jika melebihi lebar */
 }
 
-h1, h2, h3 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-p {
-    color: #666;
-    text-align: center;
-}
-
+/* Gaya untuk form-group */
 .form-group {
-    margin-bottom: 15px;
-    text-align: left;
+    margin-bottom: 1rem; /* Jarak antar grup form */
 }
 
+/* Gaya untuk label form */
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
     font-weight: bold;
-    color: #555;
+    color: #5a5c69; /* Warna teks yang umum di SB Admin 2 */
 }
 
+/* Gaya untuk input, textarea, select */
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -57,38 +47,52 @@ input[type="date"],
 input[type="number"],
 input[type="url"],
 textarea,
-select {
-    width: 100%; /* Mengisi penuh lebar parent */
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box; /* Pastikan padding tidak menambah lebar total */
+select.form-control { /* Tambahkan class form-control untuk konsistensi Bootstrap */
+    width: 100%;
+    padding: 0.675rem 0.75rem; /* Padding standar Bootstrap */
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #6e707e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d1d3e2; /* Border standar Bootstrap */
+    border-radius: 0.35rem; /* Border radius standar Bootstrap */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-sizing: border-box; /* Penting */
 }
 
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select.form-control:focus {
+    border-color: #80bdff; /* Focus color standar Bootstrap */
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Gaya untuk tombol */
 button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 5px; /* Sedikit jarak antar tombol */
-    margin-top: 10px; /* Jarak dari atas */
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
+    /* Gunakan class Bootstrap seperti btn, btn-primary, btn-info, dll. */
+    /* Override margin-right default jika perlu untuk jarak antar tombol */
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 /* Gaya khusus untuk tombol-tombol edit/delete/borrow/return di tabel */
 .edit-btn, .delete-btn, .borrow-btn, .return-btn {
+    /* Sudah menggunakan class Bootstrap di JS */
+    /* Anda bisa override jika ingin gaya yang lebih spesifik */
     padding: 6px 10px;
-    font-size: 14px;
-    margin-right: 5px;
+    font-size: 0.85rem; /* Lebih kecil */
+    margin-right: 0.25rem; /* Jarak antar tombol aksi */
+    white-space: nowrap; /* Pastikan teks tombol tidak pecah baris */
 }
+/* Warna spesifik untuk setiap tombol jika tidak pakai class Bootstrap */
+/*
 .edit-btn { background-color: #ffc107; color: #333; }
 .edit-btn:hover { background-color: #e0a800; }
 .delete-btn { background-color: #dc3545; }
@@ -97,24 +101,32 @@ button:hover {
 .borrow-btn:hover { background-color: #218838; }
 .return-btn { background-color: #17a2b8; }
 .return-btn:hover { background-color: #138496; }
+*/
 
 
-/* Layout Tombol di Dashboard: Buat mereka sejajar */
-.dashboard-container button {
-    display: inline-block; /* Agar tombol-tombol bersebelahan */
-    /* margin-bottom: 10px; */ /* Sesuaikan jika perlu jarak bawah */
+/* Login Page Specific Styles */
+/* .bg-login-image dan .form-control-user sudah dari SB Admin 2 */
+.login-container {
+    /* Default container, tapi di index.html login page pakai layout SB Admin 2 */
+    /* Jadi gaya ini mungkin tidak berlaku jika sudah diadaptasi */
 }
-/* Untuk tombol di baris yang sama, seperti Tambah Aset Baru dan Manajemen Pengguna */
+
+
+/* Dashboard Specific Styles */
+/* .dashboard-container sudah diubah menjadi bagian dari layout SB Admin 2 */
+/* Jadi gaya untuk .dashboard-container yang lama mungkin tidak lagi relevan */
+
 .dashboard-actions {
     margin-bottom: 20px;
     text-align: center; /* Pusatkan tombol-tombol aksi utama */
 }
-.dashboard-actions button {
+.dashboard-actions button, .dashboard-actions a.btn { /* Target juga a.btn dari SB Admin 2 */
     margin: 5px; /* Jarak antar tombol di grup aksi */
+    display: inline-block; /* Agar tombol bersebelahan */
 }
 
 
-/* Gaya untuk Pencarian dan Filter */
+/* Filter Section */
 .filter-section {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -127,58 +139,51 @@ button:hover {
     gap: 10px; /* Jarak antar elemen */
     align-items: center; /* Tengahkan vertikal */
 }
-.filter-section input,
-.filter-section select,
-.filter-section button {
-    /* flex-grow: 1; */ /* Biarkan elemen tumbuh mengisi ruang, opsional */
-    min-width: 150px; /* Lebar minimum agar tidak terlalu sempit */
-}
-/* Atur lebar input/select agar tidak terlalu lebar */
-.filter-section input[type="text"] {
-    width: 300px; /* Lebar default untuk input search */
-    max-width: 100%;
-}
-.filter-section select {
-    width: auto; /* Biarkan select menyesuaikan kontennya */
-    max-width: 100%;
-}
 
 
-/* Gaya Tabel Umum */
-table {
+/* Table Styling */
+/* SB Admin 2 sudah punya .table.table-bordered, jadi ini untuk penyesuaian */
+.table-responsive { /* Pastikan ini membungkus tabel Anda */
+    overflow-x: auto;
+}
+.table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    /* display: block; */ /* Jangan display block di sini jika ingin scroll horizontal, nanti di media query */
-    overflow-x: auto; /* Untuk tampilan desktop, jika tabel terlalu lebar */
+    /* display: table; - override jika Anda pakai display: block untuk responsif khusus mobile */
     white-space: nowrap; /* Mencegah teks dalam sel pecah baris saat scroll */
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 12px; /* Tambah padding agar lebih lega */
+.table th, .table td { /* Ambil class .table dari Bootstrap */
+    padding: 12px;
     text-align: left;
-    white-space: normal; /* Izinkan teks pecah baris lagi di dalam sel */
-    vertical-align: top; /* Pastikan konten sel di atas */
+    white-space: normal;
+    vertical-align: top;
+    border: 1px solid #e3e6f0; /* Border color for Bootstrap table */
 }
 
-th {
-    background-color: #e9ecef; /* Warna header yang lebih terang */
-    color: #495057;
+.table thead th { /* Header tabel */
+    background-color: #eaecf4;
+    color: #5a5c69;
     font-weight: bold;
 }
 
-/* Gaya Modal */
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fc; /* Light striping for table rows */
+}
+
+
+/* Gaya Modal (ini adalah CSS yang dipindahkan dari inline style) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top, lebih tinggi dari elemen lain */
+    z-index: 1050; /* Sit on top, lebih tinggi dari elemen lain */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.6); /* Black w/ more opacity */
+    /*background-color: rgba(0,0,0,0.6); /* Black w/ more opacity */
     padding-top: 60px; /* Sedikit padding dari atas */
 }
 
@@ -210,13 +215,14 @@ th {
 }
 
 
-/* Responsive Design (Media Queries) */
+/* Responsive Design (Media Queries) - Khusus untuk tabel agar jadi kartu di mobile */
 @media (max-width: 768px) {
+    /* .container (untuk login/user management) */
     .container {
         padding: 20px;
         margin: 10px auto;
     }
-
+    /* Filter section */
     .filter-section {
         flex-direction: column; /* Tumpuk elemen filter secara vertikal */
         align-items: stretch; /* Regangkan elemen agar selebar parent */
@@ -228,47 +234,46 @@ th {
         margin-right: 0;
     }
 
-    /* Untuk membuat tabel menjadi kartu di layar kecil */
-    table, thead, tbody, th, td, tr {
+    /* Tabel menjadi kartu di layar kecil */
+    .table, .table thead, .table tbody, .table th, .table td, .table tr {
         display: block;
     }
-    thead tr {
+    .table thead tr {
         position: absolute;
-        top: -9999px; /* Sembunyikan header asli */
+        top: -9999px;
         left: -9999px;
     }
-    tr {
-        border: 1px solid #ccc;
+    .table tr {
+        border: 1px solid #e3e6f0;
         margin-bottom: 10px;
         display: block;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Tambahkan shadow */
-        border-radius: 5px; /* Sudut sedikit melengkung */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border-radius: 5px;
     }
-    td {
+    .table td {
         border: none;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #eaecf4;
         position: relative;
-        padding-left: 50%; /* Beri ruang untuk label */
+        padding-left: 50%;
         text-align: right;
-        font-size: 14px; /* Kecilkan font */
+        font-size: 0.9rem;
     }
-    td:last-child {
-        border-bottom: 0; /* Hapus border bawah pada sel terakhir */
+    .table td:last-child {
+        border-bottom: 0;
     }
-    td:before {
+    .table td:before {
         content: attr(data-label);
         position: absolute;
-        left: 10px; /* Lebih ke kiri */
+        left: 10px;
         width: 45%;
         padding-right: 10px;
         white-space: nowrap;
         text-align: left;
         font-weight: bold;
-        color: #777; /* Warna label */
+        color: #777;
     }
-
     .modal-content {
-        width: 95%; /* Lebih lebar di ponsel */
+        width: 95%;
         padding: 20px;
     }
 }

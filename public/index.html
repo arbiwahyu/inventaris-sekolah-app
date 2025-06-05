@@ -1,27 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Aplikasi Inventaris</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Aplikasi Inventaris Sekolah">
+    <meta name="author" content="Arbi Wahyu">
+
+    <title>Login - Inventaris Sekolah</title>
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=202506021800"> <style>
+        /* Gaya khusus untuk gambar latar login jika tidak ada di style.css */
+        .bg-login-image {
+            background: url('img/undraw_secure_login_re_hrl4.svg'); /* Pastikan gambar ini ada di public/img/ */
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body>
-    <div class="login-container">
-        <h2>Login Inventaris Sekolah</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang Kembali!</h1>
+                                    </div>
+                                    <form class="user" id="loginForm"> <div class="form-group">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="username" name="username" aria-describedby="emailHelp"
+                                                placeholder="Masukkan Username..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                id="password" name="password" placeholder="Password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Login
+                                        </button>
+                                        <p id="message" class="text-center mt-3" style="color: red;"></p>
+                                    </form>
+                                    <hr>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Login</button>
-            <p id="message" style="color: red; margin-top: 10px;"></p>
-        </form>
-    </div>
-    <script src="js/auth.js"></script>
-</body>
-</html>
+        </div>
+
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <script src="js/sb-admin-2.min.js"></script>
+
+        <script src="js/auth.js?v=202506021800"></script> </body>
+    </html>

@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     alert('Sesi Anda berakhir atau tidak memiliki izin. Silakan login kembali.');
                     localStorage.removeItem('token');
                     window.location.href = '/';
-                    return;
                 }
                 throw new Error('Gagal memuat data pengguna.');
             }
@@ -55,13 +54,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const actionsCell = row.insertCell();
                 const editButton = document.createElement('button');
-                editButton.textContent = 'Edit';
-                editButton.classList.add('edit-btn');
+                editButton.innerHTML = '<i class="fas fa-edit"></i> Edit'; // Icon
+                editButton.classList.add('btn', 'btn-warning', 'btn-sm');
                 editButton.onclick = () => openUserModalForEdit(user.id, token);
 
                 const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Hapus';
-                deleteButton.classList.add('delete-btn');
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i> Hapus'; // Icon
+                deleteButton.classList.add('btn', 'btn-danger', 'btn-sm', 'ml-1');
                 deleteButton.onclick = () => deleteUser(user.id, token);
 
                 actionsCell.appendChild(editButton);
@@ -146,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 userMessage.textContent = data.message;
                 setTimeout(() => {
                     userModal.style.display = 'none';
-                    fetchUsers(token); // Muat ulang daftar pengguna
+                    fetchUsers(); // Muat ulang daftar pengguna
                 }, 1000);
             } else {
                 userMessage.style.color = 'red';
@@ -172,7 +171,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (response.ok) {
                     alert('Pengguna berhasil dihapus!');
-                    fetchUsers(token); // Muat ulang daftar pengguna setelah dihapus
+                    fetchUsers(); // Muat ulang daftar pengguna setelah dihapus
                 } else {
                     const errorData = await response.json();
                     alert(`Gagal menghapus pengguna: ${errorData.message}`);

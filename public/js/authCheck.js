@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Jika Anda ingin mengaktifkannya, pastikan Anda juga memiliki endpoint backend
     // seperti /api/auth/verify-token yang memvalidasi JWT.
 
-    // KOMENTARI SELURUH BLOK try...catch INI SEMENTARA:
+    // KOMENTARI SELURUH BLOK try...catch INI SEMENTARA untuk development:
     /*
     try {
         console.log('[AUTH CHECK] Token found. Attempting to verify token with backend...');
-        const response = await fetch('/api/auth/verify-token', { // Anda perlu membuat endpoint ini di backend
-            method: 'POST', // Atau GET, tergantung implementasi Anda
+        const response = await fetch('/api/auth/verify-token', {
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
